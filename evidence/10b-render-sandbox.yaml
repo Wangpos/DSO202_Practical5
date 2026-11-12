@@ -1,0 +1,86 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    environment: sandbox
+  name: webapp-sandbox
+---
+apiVersion: v1
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+      <head><title>webapp</title></head>
+      <body>
+        <h1>Base page</h1>
+        <p>Environment: base (should be replaced by an overlay)</p>
+      </body>
+    </html>
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/name: webapp
+    environment: sandbox
+  name: sandbox-web-content-g6667tg6dc
+  namespace: webapp-sandbox
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/name: webapp
+    environment: sandbox
+  name: sandbox-webapp
+  namespace: webapp-sandbox
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: http
+  selector:
+    app: webapp
+    app.kubernetes.io/name: webapp
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: webapp
+    environment: sandbox
+  name: sandbox-webapp
+  namespace: webapp-sandbox
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp
+      app.kubernetes.io/name: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+        app.kubernetes.io/name: webapp
+        environment: sandbox
+    spec:
+      containers:
+      - image: nginx:1.27-alpine
+        name: nginx
+        ports:
+        - containerPort: 80
+          name: http
+        resources:
+          limits:
+            cpu: 100m
+            memory: 128Mi
+          requests:
+            cpu: 50m
+            memory: 64Mi
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: web-content
+          readOnly: true
+      volumes:
+      - configMap:
+          name: sandbox-web-content-g6667tg6dc
+        name: web-content

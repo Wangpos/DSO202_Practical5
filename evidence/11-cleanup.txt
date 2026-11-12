@@ -1,0 +1,28 @@
+$ kubectl delete -k examples/webapp/overlays/dev
+namespace "webapp-dev" deleted
+configmap "web-content-4m4f87g697" deleted from webapp-dev namespace
+service "webapp" deleted from webapp-dev namespace
+deployment.apps "webapp" deleted from webapp-dev namespace
+$ kubectl delete -k examples/webapp/overlays/staging
+namespace "webapp-staging" deleted
+configmap "web-content-46d8d874kg" deleted from webapp-staging namespace
+service "webapp" deleted from webapp-staging namespace
+deployment.apps "webapp" deleted from webapp-staging namespace
+$ kubectl delete -k examples/webapp/overlays/prod
+namespace "webapp-prod" deleted
+configmap "web-content-cgkcc9tt7c" deleted from webapp-prod namespace
+service "webapp" deleted from webapp-prod namespace
+deployment.apps "webapp" deleted from webapp-prod namespace
+$ kubectl delete -k examples/webapp/overlays/qa
+namespace "webapp-qa" deleted
+configmap "web-content-htkgc9bm2g" deleted from webapp-qa namespace
+service "webapp" deleted from webapp-qa namespace
+deployment.apps "webapp" deleted from webapp-qa namespace
+$ kubectl get ns | grep 'webapp-' || true
+(no webapp- namespaces remain)
+NAME                 STATUS   AGE
+default              Active   3m18s
+kube-node-lease      Active   3m18s
+kube-public          Active   3m18s
+kube-system          Active   3m18s
+local-path-storage   Active   3m14s

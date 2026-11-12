@@ -1,0 +1,6 @@
+### BEFORE
+NAME                     DATA   AGE
+kube-root-ca.crt         1      34s
+web-content-hc85hbfh9k   1      34s
+NAME                      READY   STATUS    RESTARTS   AGE   IP           NODE             NOMINATED NODE   READINESS GATES
+webapp-7976f68875-wv2nz   1/1     Running   0          34s   10.244.2.2   dso202-worker2   <none>           <none>

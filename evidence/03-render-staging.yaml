@@ -1,0 +1,87 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    environment: staging
+  name: webapp-staging
+---
+apiVersion: v1
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+      <head><title>webapp - staging</title></head>
+      <body style="background:#fff8e1">
+        <h1>staging</h1>
+        <p>Environment: staging</p>
+        <p>Namespace: webapp-staging</p>
+      </body>
+    </html>
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/name: webapp
+    environment: staging
+  name: web-content-46d8d874kg
+  namespace: webapp-staging
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/name: webapp
+    environment: staging
+  name: webapp
+  namespace: webapp-staging
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: http
+  selector:
+    app: webapp
+    app.kubernetes.io/name: webapp
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: webapp
+    environment: staging
+  name: webapp
+  namespace: webapp-staging
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: webapp
+      app.kubernetes.io/name: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+        app.kubernetes.io/name: webapp
+        environment: staging
+    spec:
+      containers:
+      - image: nginx:1.27.3-alpine
+        name: nginx
+        ports:
+        - containerPort: 80
+          name: http
+        resources:
+          limits:
+            cpu: 100m
+            memory: 128Mi
+          requests:
+            cpu: 50m
+            memory: 64Mi
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: web-content
+          readOnly: true
+      volumes:
+      - configMap:
+          name: web-content-46d8d874kg
+        name: web-content

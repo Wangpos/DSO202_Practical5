@@ -1,0 +1,7 @@
+examples/webapp/overlays/qa
+├── index.html
+├── kustomization.yaml
+├── namespace.yaml
+└── patch-annotation.yaml
+
+1 directory, 4 files

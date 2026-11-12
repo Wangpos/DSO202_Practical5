@@ -1,0 +1,17 @@
+PREDICTION (written before rendering the sandbox overlay)
+
+Will change:
+  Deployment  webapp                         -> sandbox-webapp
+  Service     webapp                         -> sandbox-webapp
+  ConfigMap   web-content-<hash>             -> sandbox-web-content-<hash>
+  Deployment  volumes[].configMap.name       -> sandbox-web-content-<hash>  (reference rewritten)
+
+Will NOT change:
+  Namespace   webapp-sandbox                 (cluster-scoped namespace names are not prefixed)
+  volumes[].name / volumeMounts[].name = web-content   (local pod names, not object refs)
+  container name nginx, port name http
+  labels / selectors (app: webapp)           (labels are values, not names)
+  Service selector still matches the pods, so the Service still works.
+
+Unsure: whether the hash suffix stays g6667tg6dc (same data as base)
+        or changes because the name is part of the hashed content.

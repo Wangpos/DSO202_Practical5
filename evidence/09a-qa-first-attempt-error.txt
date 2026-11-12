@@ -1,0 +1,1 @@
+error: add operation does not apply: doc is missing path: "/metadata/annotations/training.example.com/owner": missing value

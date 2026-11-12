@@ -1,0 +1,36 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: webapp-prod
+
+resources:
+  - ../../base
+  - namespace.yaml
+
+labels:
+  - pairs:
+      environment: prod
+    includeSelectors: false
+    includeTemplates: true
+
+commonAnnotations:
+  training.example.com/change-policy: approval-required
+
+replicas:
+  - name: webapp
+    count: 3
+
+images:
+  - name: nginx
+    newTag: 1.27.3-alpine
+
+configMapGenerator:
+  - name: web-content
+    behavior: replace
+    files:
+      - index.html
+
+# Strategic merge patch: only the fields listed here change,
+# everything else in the base container is kept.
+patches:
+  - path: patch-resources.yaml

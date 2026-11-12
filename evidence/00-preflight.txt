@@ -1,0 +1,21 @@
+kind-dso202
+Kubernetes control plane is running at https://127.0.0.1:63500
+CoreDNS is running at https://127.0.0.1:63500/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+
+To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
+NAME                   STATUS   ROLES           AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE                       KERNEL-VERSION            CONTAINER-RUNTIME
+dso202-control-plane   Ready    control-plane   23s   v1.36.1   172.19.0.2    <none>        Debian GNU/Linux 13 (trixie)   7.0.14-linuxkit (arm64)   containerd://2.3.1
+dso202-worker          Ready    <none>          13s   v1.36.1   172.19.0.6    <none>        Debian GNU/Linux 13 (trixie)   7.0.14-linuxkit (arm64)   containerd://2.3.1
+dso202-worker2         Ready    <none>          13s   v1.36.1   172.19.0.4    <none>        Debian GNU/Linux 13 (trixie)   7.0.14-linuxkit (arm64)   containerd://2.3.1
+clientVersion:
+  buildDate: "2026-10-27T12:01:04Z"
+  compiler: gc
+  gitCommit: c50e5395f1ae2d4a2c05f28fdcc38c0916cc1a32
+  gitTreeState: clean
+  gitVersion: v1.37.2
+  goVersion: go1.26.10
+  major: "1"
+  minor: "37"
+  platform: darwin/arm64
+kustomizeVersion: v5.8.1
+

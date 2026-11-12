@@ -1,0 +1,9 @@
+# JSON 6902 (RFC 6902) patch.
+# The base Deployment has no metadata.annotations map, so we add the map
+# itself. If the map already existed we would instead target
+#   /metadata/annotations/training.example.com~1owner
+# ("~1" is how JSON Pointer escapes the "/" inside the key).
+- op: add
+  path: /metadata/annotations
+  value:
+    training.example.com/owner: qa-team

@@ -1,0 +1,4 @@
+namespace/webapp-staging created
+configmap/web-content-46d8d874kg created
+service/webapp created
+deployment.apps/webapp created
